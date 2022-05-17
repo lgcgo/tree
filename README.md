@@ -1,9 +1,10 @@
 # tree
-A level-order tree traversal or golang.
+A level-order tree traversal for golang.
 
 # Features
-- Support unlimited parent-child nesting of data
-- Concise, elegant and efficient
+- There is no recursive code to realize infinite parent-child data nesting.
+- Support sorting by weight field.
+- Virtual root node automatic.
 
 # Installation
 `go get -u github.com/lgcgo/tree`

@@ -28,8 +28,6 @@ type TreeData struct {
 	Children  []*TreeData `json:"children"`
 }
 
-var insTree = new(tree)
-
 // Implement Inoder abstract component
 func (d TreeData) CalSortValue() int {
 	return d.Weight
@@ -38,9 +36,10 @@ func (d TreeData) CalSortValue() int {
 // Create with treeData
 func NewWithData(data []*TreeData) (*tree, error) {
 	var (
-		rootNode = NewNode(&TreeData{Title: "root"})
-		nodeMap  = make(map[*node]*node, 0)
-		nodeList = make(map[uint]*node, 0)
+		insTree  = new(tree)
+		rootNode = NewNode(&TreeData{Title: "root"}) // Virtual root node
+		nodeMap  = make(map[*node]*node, 0)          // Relationship chain
+		nodeList = make(map[uint]*node, 0)           // Node list
 	)
 	// Set node list
 	nodeList[0] = rootNode
