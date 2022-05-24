@@ -12,7 +12,7 @@ import (
 )
 
 // Tree struct
-type tree struct {
+type Tree struct {
 	RootNode *node          // Root node
 	NodeList map[uint]*node // Node list
 }
@@ -34,9 +34,9 @@ func (d TreeData) CalSortValue() int {
 }
 
 // Create with treeData
-func NewWithData(data []*TreeData) (*tree, error) {
+func NewWithData(data []*TreeData) (*Tree, error) {
 	var (
-		insTree  = new(tree)
+		insTree  = new(Tree)
 		rootNode = NewNode(&TreeData{Title: "root"}) // Virtual root node
 		nodeMap  = make(map[*node]*node, 0)          // Relationship chain
 		nodeList = make(map[uint]*node, 0)           // Node list
@@ -84,12 +84,12 @@ func NewWithData(data []*TreeData) (*tree, error) {
 }
 
 // Get the specified node tree data
-func (t *tree) GetNodeTree(n *node) *TreeData {
+func (t *Tree) GetNodeTree(n *node) *TreeData {
 	return n.Noder.(*TreeData)
 }
 
 // Gets the specified node
-func (t *tree) GetNode(key uint) (*node, error) {
+func (t *Tree) GetNode(key uint) (*node, error) {
 	n, ok := t.NodeList[key]
 	if !ok {
 		return nil, errors.New(`node not exist`)
@@ -98,11 +98,11 @@ func (t *tree) GetNode(key uint) (*node, error) {
 }
 
 // Get the number of nodes
-func (t *tree) CountNode() int {
+func (t *Tree) CountNode() int {
 	return len(t.NodeList)
 }
 
 // Get whole tree data
-func (t *tree) Tree() *TreeData {
+func (t *Tree) Tree() *TreeData {
 	return t.GetNodeTree(t.RootNode)
 }

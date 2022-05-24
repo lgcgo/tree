@@ -35,9 +35,14 @@ var data = []*tree.TreeData{
         Weight:    49,
     },
 }
-t, err := tree.NewWithData(data)
-tData := t.Tree()
-tjson, _ := json.MarshalIndent(tData, "", "  ")
+var (
+  err   error
+  t     *tree.Tree
+)
+if t, err = tree.NewWithData(data); err != nil {
+  panic(err.Error())
+}
+tjson, _ := json.MarshalIndent(t.Tree(), "", "  ")
 fmt.Println(string(tjson))
 ````
 
