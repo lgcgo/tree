@@ -83,6 +83,41 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 	return insTree, nil
 }
 
+// Get all child IDs of node
+func (t *Tree) GetAllChildKey(n *node) []uint {
+	var (
+		keys     = make([]uint, 0)
+		children = make(map[uint]*TreeData, 0)
+		treeData *TreeData
+	)
+	treeData = t.GetNodeTree(n)
+	// Save node key
+	keys = append(keys, treeData.Key)
+	//
+	for _, v := range treeData.Children {
+		children[v.Key] = v
+	}
+
+	for {
+		if len(children) == 0 {
+			break
+		}
+		temp := children
+		for k, v := range temp {
+			keys = append(keys, v.Key)
+			delete(children, k)
+
+			if len(v.Children) > 0 {
+				for _, vv := range v.Children {
+					children[vv.Key] = vv
+				}
+			}
+		}
+	}
+
+	return keys
+}
+
 // Get the specified node tree data
 func (t *Tree) GetNodeTree(n *node) *TreeData {
 	return n.Noder.(*TreeData)
