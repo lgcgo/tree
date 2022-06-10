@@ -75,15 +75,14 @@ func TestGetAllChildKey(t *testing.T) {
 	var (
 		err error
 		tr  *tree.Tree
+		res []uint
 	)
 	if tr, err = tree.NewWithData(data); err != nil {
 		t.Error(err.Error())
 	}
-	node, err := tr.GetNode(5)
+	res, err = tr.GetAllChildKey(5)
 	if err != nil {
 		t.Error(err.Error())
 	}
-	res := tr.GetAllChildKey(node)
-
 	t.Error(res)
 }

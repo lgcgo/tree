@@ -84,13 +84,18 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 }
 
 // Get all child key of node
-func (t *Tree) GetAllChildKey(n *Node) []uint {
+func (t *Tree) GetAllChildKey(key uint) ([]uint, error) {
 	var (
 		keys     = make([]uint, 0)
 		children = make(map[uint]*TreeData, 0)
 		treeData *TreeData
+		node     *Node
+		err      error
 	)
-	treeData = t.GetNodeTree(n)
+	if node, err = t.GetNode(key); err != nil {
+		return nil, err
+	}
+	treeData = t.GetNodeTree(node)
 	// Save self key
 	keys = append(keys, treeData.Key)
 	// Initialize queue
@@ -115,7 +120,7 @@ func (t *Tree) GetAllChildKey(n *Node) []uint {
 		}
 	}
 
-	return keys
+	return keys, nil
 }
 
 // Get the specified node tree data
