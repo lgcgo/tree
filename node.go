@@ -1,8 +1,8 @@
 /*
  * @Author: Jimmy.liu
  * @Date: 2022-05-13 14:58:48
- * @Last Modified by: Jimmy.liu
- * @Last Modified time: 2022-05-13 14:59:24
+ * @Last Modified by: lgcgo
+ * @Last Modified time: 2022-06-10 20:57:15
  */
 package tree
 
@@ -12,12 +12,12 @@ type INoder interface {
 }
 
 // Decorator
-type node struct {
+type Node struct {
 	Noder INoder
 }
 
 // Implement sorting algorithm
-type nodes []*node
+type nodes []*Node
 
 // Sort by sort value
 func (ns nodes) Len() int { return len(ns) }
@@ -26,7 +26,7 @@ func (ns nodes) Less(i, j int) bool {
 }
 func (ns nodes) Swap(i, j int) { ns[i], ns[j] = ns[j], ns[i] }
 func (ns *nodes) Push(x interface{}) {
-	*ns = append(*ns, x.(*node))
+	*ns = append(*ns, x.(*Node))
 }
 func (ns *nodes) Pop() interface{} {
 	old := *ns
@@ -37,6 +37,6 @@ func (ns *nodes) Pop() interface{} {
 }
 
 // Create node
-func NewNode(n INoder) *node {
-	return &node{Noder: n}
+func NewNode(n INoder) *Node {
+	return &Node{Noder: n}
 }

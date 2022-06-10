@@ -1,8 +1,8 @@
 /*
- * @Author: Jimmy.liu
- * @Date: 2022-05-13 14:58:17
- * @Last Modified by: Jimmy.liu
- * @Last Modified time: 2022-05-13 15:37:17
+ * @Author: lgcgo
+ * @Date: 2022-06-10 20:56:41
+ * @Last Modified by: lgcgo
+ * @Last Modified time: 2022-06-10 20:57:02
  */
 package tree
 
@@ -13,8 +13,8 @@ import (
 
 // Tree struct
 type Tree struct {
-	RootNode *node          // Root node
-	NodeList map[uint]*node // Node list
+	RootNode *Node          // Root node
+	NodeList map[uint]*Node // Node list
 }
 
 // Data structure(Refer to antd tree requirements)
@@ -38,8 +38,8 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 	var (
 		insTree  = new(Tree)
 		rootNode = NewNode(&TreeData{Title: "root"}) // Virtual root node
-		nodeMap  = make(map[*node]*node, 0)          // Relationship chain
-		nodeList = make(map[uint]*node, 0)           // Node list
+		nodeMap  = make(map[*Node]*Node, 0)          // Relationship chain
+		nodeList = make(map[uint]*Node, 0)           // Node list
 	)
 	// Set node list
 	nodeList[0] = rootNode
@@ -83,21 +83,21 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 	return insTree, nil
 }
 
-// Get all child IDs of node
-func (t *Tree) GetAllChildKey(n *node) []uint {
+// Get all child key of node
+func (t *Tree) GetAllChildKey(n *Node) []uint {
 	var (
 		keys     = make([]uint, 0)
 		children = make(map[uint]*TreeData, 0)
 		treeData *TreeData
 	)
 	treeData = t.GetNodeTree(n)
-	// Save node key
+	// Save self key
 	keys = append(keys, treeData.Key)
-	//
+	// Initialize queue
 	for _, v := range treeData.Children {
 		children[v.Key] = v
 	}
-
+	// level-traversal
 	for {
 		if len(children) == 0 {
 			break
@@ -119,12 +119,12 @@ func (t *Tree) GetAllChildKey(n *node) []uint {
 }
 
 // Get the specified node tree data
-func (t *Tree) GetNodeTree(n *node) *TreeData {
+func (t *Tree) GetNodeTree(n *Node) *TreeData {
 	return n.Noder.(*TreeData)
 }
 
 // Gets the specified node
-func (t *Tree) GetNode(key uint) (*node, error) {
+func (t *Tree) GetNode(key uint) (*Node, error) {
 	n, ok := t.NodeList[key]
 	if !ok {
 		return nil, errors.New(`node not exist`)
