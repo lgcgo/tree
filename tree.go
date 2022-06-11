@@ -1,9 +1,10 @@
 /*
- * @Author: lgcgo
- * @Date: 2022-06-10 20:56:41
- * @Last Modified by: lgcgo
- * @Last Modified time: 2022-06-10 20:57:02
+ * @Author: jimmy.liu
+ * @Date: 2022-06-11 17:34:59
+ * @Last Modified by:   jimmy.liu
+ * @Last Modified time: 2022-06-11 17:34:59
  */
+
 package tree
 
 import (
@@ -24,7 +25,8 @@ type TreeData struct {
 	ParentKey uint        `json:"parent_key"`
 	Value     string      `json:"value"`
 	Weight    int         `json:"weight"`
-	Disabled  bool        `json:"disabled"`
+	Type      string      `json:"type,omitempty"`
+	Disabled  bool        `json:"disabled,omitempty"`
 	Children  []*TreeData `json:"children"`
 }
 
