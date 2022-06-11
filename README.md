@@ -67,7 +67,80 @@ if tr, err := tree.NewWithData(data); err != nil {
  panic(err)
 }
 tjson, _ := json.MarshalIndent(tr.Tree(), "", "  ")
-```
+
+````
+print
+````json
+{
+  "title": "",
+  "key": "root",
+  "parent_key": "",
+  "value": "",
+  "weight": 0,
+  "children": [
+    {
+      "title": "superAdmin",
+      "key": "key-1",
+      "parent_key": "root",
+      "value": "superAdmin",
+      "weight": 0,
+      "children": [
+        {
+          "title": "sub1Admin",
+          "key": "key-2",
+          "parent_key": "key-1",
+          "value": "sub1Admin",
+          "weight": 0,
+          "children": [
+            {
+              "title": "sub3Admin",
+              "key": "key-4",
+              "parent_key": "key-2",
+              "value": "sub3Admin",
+              "weight": 0,
+              "children": []
+            },
+            {
+              "title": "sub4Admin",
+              "key": "key-5",
+              "parent_key": "key-2",
+              "value": "sub4Admin",
+              "weight": 0,
+              "children": [
+                {
+                  "title": "sub5Admin",
+                  "key": "key-6",
+                  "parent_key": "key-5",
+                  "value": "sub5Admin",
+                  "weight": 0,
+                  "children": []
+                },
+                {
+                  "title": "sub6Admin",
+                  "key": "key-7",
+                  "parent_key": "key-5",
+                  "value": "sub6Admin",
+                  "weight": 0,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "sub2Admin",
+          "key": "key-3",
+          "parent_key": "key-1",
+          "value": "sub2Admin",
+          "weight": 0,
+          "children": []
+        }
+      ]
+    }
+  ]
+}
+````
+
 
 # License
 Licensed under the [MIT license](LICENSE). Free & Forever.
