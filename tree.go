@@ -14,15 +14,15 @@ import (
 
 // Tree struct
 type Tree struct {
-	RootNode *Node          // Root node
-	NodeList map[uint]*Node // Node list
+	RootNode *Node            // Root node
+	NodeList map[string]*Node // Node list
 }
 
 // Data structure(Refer to antd tree requirements)
 type TreeData struct {
 	Title     string      `json:"title"`
-	Key       uint        `json:"key"`
-	ParentKey uint        `json:"parent_key"`
+	Key       string      `json:"key"`
+	ParentKey string      `json:"parent_key"`
 	Value     string      `json:"value"`
 	Weight    int         `json:"weight"`
 	Type      string      `json:"type,omitempty"`
@@ -39,13 +39,17 @@ func (d TreeData) CalSortValue() int {
 func NewWithData(data []*TreeData) (*Tree, error) {
 	var (
 		insTree  = new(Tree)
-		rootNode = NewNode(&TreeData{Title: "root"}) // Virtual root node
-		nodeMap  = make(map[*Node]*Node, 0)          // Relationship chain
-		nodeList = make(map[uint]*Node, 0)           // Node list
+		rootNode = NewNode(&TreeData{Key: "root"}) // Virtual root node
+		nodeMap  = make(map[*Node]*Node, 0)        // Relationship chain
+		nodeList = make(map[string]*Node, 0)       // Node list
 	)
 	// Set node list
-	nodeList[0] = rootNode
+	nodeList["root"] = rootNode
 	for _, item := range data {
+		// Mount empty parent node to root
+		if item.ParentKey == "" {
+			item.ParentKey = "root"
+		}
 		nodeList[item.Key] = NewNode(item)
 	}
 	// Set relationship list
@@ -86,10 +90,10 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 }
 
 // Get all child key of node
-func (t *Tree) GetAllChildKey(key uint) ([]uint, error) {
+func (t *Tree) GetAllChildKey(key string) ([]string, error) {
 	var (
-		keys     = make([]uint, 0)
-		children = make(map[uint]*TreeData, 0)
+		keys     = make([]string, 0)
+		children = make(map[string]*TreeData, 0)
 		treeData *TreeData
 		node     *Node
 		err      error
@@ -131,7 +135,7 @@ func (t *Tree) GetNodeTree(n *Node) *TreeData {
 }
 
 // Gets the specified node
-func (t *Tree) GetNode(key uint) (*Node, error) {
+func (t *Tree) GetNode(key string) (*Node, error) {
 	n, ok := t.NodeList[key]
 	if !ok {
 		return nil, errors.New(`node not exist`)

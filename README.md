@@ -10,82 +10,63 @@ A level-order tree traversal for golang.
 `go get -u github.com/lgcgo/tree`
 
 # Example
-In json format
 ````go
 var data = []*tree.TreeData{
-    {
-        Title:     "User",
-        Key:       1,
-        ParentKey: 0,
-        Value:     "/user",
-        Weight:    50,
-    },
-    {
-        Title:     "Add user",
-        Key:       2,
-        ParentKey: 1,
-        Value:     "/user/add",
-        Weight:    50,
-    },
-    {
-        Title:     "Delete user",
-        Key:       3,
-        ParentKey: 1,
-        Value:     "/user/delete",
-        Weight:    49,
-    },
+	{
+		Title:     "superAdmin",
+		Key:       "key-1",
+		ParentKey: "",
+		Value:     "superAdmin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub1Admin",
+		Key:       "key-2",
+		ParentKey: "key-1",
+		Value:     "sub1Admin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub2Admin",
+		Key:       "key-3",
+		ParentKey: "key-1",
+		Value:     "sub2Admin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub3Admin",
+		Key:       "key-4",
+		ParentKey: "key-2",
+		Value:     "sub3Admin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub4Admin",
+		Key:       "key-5",
+		ParentKey: "key-2",
+		Value:     "sub4Admin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub5Admin",
+		Key:       "key-6",
+		ParentKey: "key-5",
+		Value:     "sub5Admin",
+		Weight:    0,
+	},
+	{
+		Title:     "sub6Admin",
+		Key:       "key-7",
+		ParentKey: "key-5",
+		Value:     "sub6Admin",
+		Weight:    0,
+	},
 }
-var (
-  err   error
-  t     *tree.Tree
-)
-if t, err = tree.NewWithData(data); err != nil {
-  panic(err.Error())
-}
-tjson, _ := json.MarshalIndent(t.Tree(), "", "  ")
-fmt.Println(string(tjson))
-````
 
-Console view
-```json
-{
-  "title": "root",
-  "key": 0,
-  "parent_key": 0,
-  "value": "",
-  "weight": 0,
-  "disabled": false,
-  "children": [
-    {
-      "title": "User",
-      "key": 1,
-      "parent_key": 0,
-      "value": "/user",
-      "weight": 50,
-      "disabled": false,
-      "children": [
-        {
-          "title": "Add user",
-          "key": 2,
-          "parent_key": 1,
-          "value": "/user/add",
-          "weight": 50,
-          "disabled": false,
-          "children": []
-        },
-        {
-          "title": "Delete user",
-          "key": 3,
-          "parent_key": 1,
-          "value": "/user/delete",
-          "weight": 49,
-          "disabled": false,
-          "children": []
-        }
-      ]
-    }
-  ]
+if tr, err := tree.NewWithData(data); err != nil {
+ panic(err)
 }
+tjson, _ := json.MarshalIndent(tr.Tree(), "", "  ")
 ```
 
 # License

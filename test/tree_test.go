@@ -10,50 +10,50 @@ import (
 var data = []*tree.TreeData{
 	{
 		Title:     "superAdmin",
-		Key:       1,
-		ParentKey: 0,
+		Key:       "key-1",
+		ParentKey: "",
 		Value:     "superAdmin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub1Admin",
-		Key:       2,
-		ParentKey: 1,
+		Key:       "key-2",
+		ParentKey: "key-1",
 		Value:     "sub1Admin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub2Admin",
-		Key:       3,
-		ParentKey: 1,
+		Key:       "key-3",
+		ParentKey: "key-1",
 		Value:     "sub2Admin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub3Admin",
-		Key:       4,
-		ParentKey: 2,
+		Key:       "key-4",
+		ParentKey: "key-2",
 		Value:     "sub3Admin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub4Admin",
-		Key:       5,
-		ParentKey: 2,
+		Key:       "key-5",
+		ParentKey: "key-2",
 		Value:     "sub4Admin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub5Admin",
-		Key:       6,
-		ParentKey: 5,
+		Key:       "key-6",
+		ParentKey: "key-5",
 		Value:     "sub5Admin",
 		Weight:    0,
 	},
 	{
 		Title:     "sub6Admin",
-		Key:       7,
-		ParentKey: 5,
+		Key:       "key-7",
+		ParentKey: "key-5",
 		Value:     "sub6Admin",
 		Weight:    0,
 	},
@@ -75,12 +75,12 @@ func TestGetAllChildKey(t *testing.T) {
 	var (
 		err error
 		tr  *tree.Tree
-		res []uint
+		res []string
 	)
 	if tr, err = tree.NewWithData(data); err != nil {
 		t.Error(err.Error())
 	}
-	res, err = tr.GetAllChildKey(5)
+	res, err = tr.GetAllChildKey("key-5")
 	if err != nil {
 		t.Error(err.Error())
 	}
