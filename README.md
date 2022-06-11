@@ -67,8 +67,10 @@ if tr, err := tree.NewWithData(data); err != nil {
  panic(err)
 }
 tjson, _ := json.MarshalIndent(tr.Tree(), "", "  ")
+fmt.Print(string(tjson))
 
 ````
+
 print
 ````json
 {
