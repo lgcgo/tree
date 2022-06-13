@@ -66,7 +66,7 @@ var data = []*tree.TreeData{
 if tr, err := tree.NewWithData(data); err != nil {
  panic(err)
 }
-tjson, _ := json.MarshalIndent(tr.Tree(), "", "  ")
+tjson, _ := json.MarshalIndent(tr.GetTreeData(), "", "  ")
 fmt.Print(string(tjson))
 
 ````
@@ -74,7 +74,7 @@ fmt.Print(string(tjson))
 print
 ````json
 {
-  "title": "",
+  "title": "Root",
   "key": "root",
   "parent_key": "",
   "value": "",

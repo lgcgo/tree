@@ -13,12 +13,12 @@ type INoder interface {
 }
 
 // Decorator
-type Node struct {
+type node struct {
 	Noder INoder
 }
 
 // Implement sorting algorithm
-type nodes []*Node
+type nodes []*node
 
 // Sort by sort value
 func (ns nodes) Len() int { return len(ns) }
@@ -27,7 +27,7 @@ func (ns nodes) Less(i, j int) bool {
 }
 func (ns nodes) Swap(i, j int) { ns[i], ns[j] = ns[j], ns[i] }
 func (ns *nodes) Push(x interface{}) {
-	*ns = append(*ns, x.(*Node))
+	*ns = append(*ns, x.(*node))
 }
 func (ns *nodes) Pop() interface{} {
 	old := *ns
@@ -38,6 +38,6 @@ func (ns *nodes) Pop() interface{} {
 }
 
 // Create node
-func NewNode(n INoder) *Node {
-	return &Node{Noder: n}
+func NewNode(n INoder) *node {
+	return &node{Noder: n}
 }

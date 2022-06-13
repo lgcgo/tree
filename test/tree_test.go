@@ -67,8 +67,8 @@ func TestTree(t *testing.T) {
 	if tr, err = tree.NewWithData(data); err != nil {
 		t.Error(err.Error())
 	}
-	tjson, _ := json.MarshalIndent(tr.Tree(), "", "  ")
-	t.Error(string(tjson))
+	tjson, _ := json.MarshalIndent(tr.GetTreeData(), "", "  ")
+	t.Errorf("tree json: %s", string(tjson))
 }
 
 func TestGetAllChildKey(t *testing.T) {
@@ -80,9 +80,9 @@ func TestGetAllChildKey(t *testing.T) {
 	if tr, err = tree.NewWithData(data); err != nil {
 		t.Error(err.Error())
 	}
-	res, err = tr.GetAllChildKey("key-5")
+	res, err = tr.GetSpecChildKeys("key-5")
 	if err != nil {
 		t.Error(err.Error())
 	}
-	t.Error(res)
+	t.Errorf("child keys: %v", res)
 }

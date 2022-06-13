@@ -14,8 +14,8 @@ import (
 
 // Tree struct
 type Tree struct {
-	RootNode *Node            // Root node
-	NodeList map[string]*Node // Node list
+	RootNode *node            // Root node
+	NodeList map[string]*node // Node list
 }
 
 // Data structure(Refer to antd tree requirements)
@@ -38,16 +38,22 @@ func (d TreeData) CalSortValue() int {
 // Create with treeData
 func NewWithData(data []*TreeData) (*Tree, error) {
 	var (
-		insTree  = new(Tree)
-		rootNode = NewNode(&TreeData{Key: "root"}) // Virtual root node
-		nodeMap  = make(map[*Node]*Node, 0)        // Relationship chain
-		nodeList = make(map[string]*Node, 0)       // Node list
+		insTree = new(Tree)
+		// Virtual root node
+		rootNode = NewNode(&TreeData{
+			Title: "Root",
+			Key:   "root",
+		})
+		// Relationship chain
+		nodeMap = make(map[*node]*node, 0)
+		// Node list
+		nodeList = make(map[string]*node, 0)
 	)
 	// Set node list
 	nodeList["root"] = rootNode
 	for _, item := range data {
 		// Mount empty parent node to root
-		if item.ParentKey == "" {
+		if item.ParentKey == "" || item.ParentKey == "0" {
 			item.ParentKey = "root"
 		}
 		nodeList[item.Key] = NewNode(item)
@@ -89,19 +95,17 @@ func NewWithData(data []*TreeData) (*Tree, error) {
 	return insTree, nil
 }
 
-// Get all child key of node
-func (t *Tree) GetAllChildKey(key string) ([]string, error) {
+// Get the specified node children keys
+func (t *Tree) GetSpecChildKeys(key string) ([]string, error) {
 	var (
 		keys     = make([]string, 0)
 		children = make(map[string]*TreeData, 0)
 		treeData *TreeData
-		node     *Node
 		err      error
 	)
-	if node, err = t.GetNode(key); err != nil {
+	if treeData, err = t.GetSpecData(key); err != nil {
 		return nil, err
 	}
-	treeData = t.GetNodeTree(node)
 	// Save self key
 	keys = append(keys, treeData.Key)
 	// Initialize queue
@@ -117,7 +121,6 @@ func (t *Tree) GetAllChildKey(key string) ([]string, error) {
 		for k, v := range temp {
 			keys = append(keys, v.Key)
 			delete(children, k)
-
 			if len(v.Children) > 0 {
 				for _, vv := range v.Children {
 					children[vv.Key] = vv
@@ -129,26 +132,22 @@ func (t *Tree) GetAllChildKey(key string) ([]string, error) {
 	return keys, nil
 }
 
-// Get the specified node tree data
-func (t *Tree) GetNodeTree(n *Node) *TreeData {
-	return n.Noder.(*TreeData)
-}
-
 // Gets the specified node
-func (t *Tree) GetNode(key string) (*Node, error) {
+func (t *Tree) GetSpecData(key string) (*TreeData, error) {
 	n, ok := t.NodeList[key]
 	if !ok {
-		return nil, errors.New(`node not exist`)
+		return nil, errors.New("node not exist")
 	}
-	return n, nil
-}
-
-// Get the number of nodes
-func (t *Tree) CountNode() int {
-	return len(t.NodeList)
+	return n.Noder.(*TreeData), nil
 }
 
 // Get whole tree data
-func (t *Tree) Tree() *TreeData {
-	return t.GetNodeTree(t.RootNode)
+func (t *Tree) GetTreeData() *TreeData {
+	n, _ := t.NodeList["root"]
+	return n.Noder.(*TreeData)
+}
+
+// Count whole tree data
+func (t *Tree) CountTreeData() int {
+	return len(t.NodeList)
 }
